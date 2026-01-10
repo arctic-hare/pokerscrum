@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE `game` ADD COLUMN `customDeck` VARCHAR(191) NULL,
+    ADD COLUMN `deckType` VARCHAR(191) NOT NULL DEFAULT 'standard',
+    ADD COLUMN `name` VARCHAR(191) NULL;
