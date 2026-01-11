@@ -6,5 +6,4 @@ node_modules
 *.md
 .editorconfig
 eslint.config.js
-tsconfig.json
 .nuxt

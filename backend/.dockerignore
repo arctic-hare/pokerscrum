@@ -6,4 +6,3 @@ dist
 *.md
 .editorconfig
 .eslintrc.js
-tsconfig.json
