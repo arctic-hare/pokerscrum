@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    restart: always
+    env_file:
+      - .env
+    environment:
+      PORT: 3000
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3001}
+    ports:
+      - "127.0.0.1:3000:3000"
+
+  frontend:
+    build: ./frontend
+    restart: always
+    env_file:
+      - .env
+    environment:
+      PORT: 3001
+      NITRO_PORT: 3001
+      API_BASE: ${API_BASE:-http://localhost:3000}
+      WS_BASE: ${WS_BASE:-ws://localhost:3000}
+    ports:
+      - "127.0.0.1:3001:3001"

@@ -1,0 +1,10 @@
+node_modules
+.output
+.env
+.git
+.gitignore
+*.md
+.editorconfig
+eslint.config.js
+tsconfig.json
+.nuxt
