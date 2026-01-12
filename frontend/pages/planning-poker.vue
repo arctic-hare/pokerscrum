@@ -4,20 +4,24 @@
     <img :src="scrumPlanningPokerImage" alt="Planning Poker" />
     <h2>Составление колоды карт и определение согласованного количества очков (сюжетных баллов)</h2>
     <table>
-      <tr>
-        <th>Цель</th>
-        <th>1-10</th>
-        <th>Fibonacci</th>
-        <th>Fibonacci modified</th>
-        <th>Степень 2</th>
-      </tr>
-      <tr v-for="(value, i) in table" :key="i">
-        <th>{{ value.target }}</th>
-        <th>{{ i }}</th>
-        <th>{{ value.fb }}</th>
-        <th>{{ value.fbm }}</th>
-        <th v-if="value.sqrt !== null">{{ value.sqrt }}</th>
-      </tr>
+      <thead>
+        <tr>
+          <th>Цель</th>
+          <th>1-10</th>
+          <th>Fibonacci</th>
+          <th>Fibonacci modified</th>
+          <th>Степень 2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(value, i) in table" :key="i">
+          <th>{{ value.target }}</th>
+          <th>{{ i }}</th>
+          <th>{{ value.fb }}</th>
+          <th>{{ value.fbm }}</th>
+          <th v-if="value.sqrt !== null">{{ value.sqrt }}</th>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>

@@ -23,10 +23,10 @@ services:
       dockerfile: Dockerfile
       args:
         API_BASE: ${API_BASE:-http://62.173.138.60/scrumpoker}
-        WS_BASE: ${WS_BASE:-ws://62.173.138.60/scrumpoker/ws}
+        WS_BASE: ${WS_BASE:-ws://62.173.138.60/scrumpoker}
         # Nuxt требует префикс NUXT_PUBLIC_ для переменных в public runtimeConfig
         NUXT_PUBLIC_API_BASE: ${API_BASE:-http://62.173.138.60/scrumpoker}
-        NUXT_PUBLIC_WS_BASE: ${WS_BASE:-ws://62.173.138.60/scrumpoker/ws}
+        NUXT_PUBLIC_WS_BASE: ${WS_BASE:-ws://62.173.138.60/scrumpoker}
     restart: always
     env_file:
       - ./frontend/.env
@@ -36,7 +36,7 @@ services:
       # Для production используем полный URL через nginx (работает и в браузере, и в SSR)
       # В коде уже добавляется /api, поэтому здесь только базовый путь
       API_BASE: ${API_BASE:-http://62.173.138.60/scrumpoker}
-      # WebSocket требует полный URL
-      WS_BASE: ${WS_BASE:-ws://62.173.138.60/scrumpoker/ws}
+      # WebSocket требует полный URL (без /ws, он добавляется в коде)
+      WS_BASE: ${WS_BASE:-ws://62.173.138.60/scrumpoker}
     ports:
       - "127.0.0.1:3001:3001"
