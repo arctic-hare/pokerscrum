@@ -9,3 +9,8 @@ build/
 .idea/
 .output/
 .nuxt/
+
+# PM2 logs
+backend/logs/
+frontend/logs/
+.pm2/

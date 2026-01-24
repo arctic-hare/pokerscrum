@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "nuxt dev --port 3001",
+    "dev:prod": "cross-env NUXT_PUBLIC_API_BASE=https://pokerscrum.ru NUXT_PUBLIC_WS_BASE=wss://pokerscrum.ru nuxt dev --port 3001",
     "build": "nuxt build",
+    "build:dev": "cross-env NUXT_PUBLIC_API_BASE=http://localhost:3000 NUXT_PUBLIC_WS_BASE=ws://localhost:3000 nuxt build",
+    "build:prod": "cross-env NUXT_PUBLIC_API_BASE=https://pokerscrum.ru NUXT_PUBLIC_WS_BASE=wss://pokerscrum.ru nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "lint": "eslint .",
@@ -23,6 +26,7 @@
     "@nuxt/devtools": "latest",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
+    "cross-env": "^7.0.3",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.0",

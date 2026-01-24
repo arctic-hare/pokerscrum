@@ -32,8 +32,23 @@ async function bootstrap() {
     })
   );
 
+  // CORS configuration - поддержка нескольких origins
+  const allowedOrigins = process.env.FRONTEND_URL
+    ? process.env.FRONTEND_URL.split(',').map(url => url.trim())
+    : ['http://localhost:3001'];
+
   app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3001',
+    origin: (origin, callback) => {
+      // Разрешаем запросы без origin (например, мобильные приложения, Postman)
+      if (!origin) return callback(null, true);
+      
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.warn(`CORS: Origin ${origin} not allowed. Allowed origins:`, allowedOrigins);
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   });
 

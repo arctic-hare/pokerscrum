@@ -46,6 +46,26 @@ export const useGameStore = defineStore('game', () => {
 
   const getConfig = () => useRuntimeConfig();
 
+  const getApiBase = () => {
+    const config = getConfig();
+    return config.public.apiBase || '';
+  };
+
+  const getWsBase = () => {
+    const config = getConfig();
+    if (config.public.wsBase) {
+      return config.public.wsBase;
+    }
+    if (config.public.apiBase) {
+      return config.public.apiBase.replace(/^http/, 'ws');
+    }
+    if (typeof window !== 'undefined') {
+      const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+      return `${protocol}://${window.location.host}`;
+    }
+    return 'ws://localhost:3000';
+  };
+
   const isJoined = computed(() => !!gameId.value && !!playerId.value);
   const canVote = computed(() => game.value?.status !== 'revealed');
   const canReveal = computed(() => game.value?.status === 'voting');
@@ -74,9 +94,8 @@ export const useGameStore = defineStore('game', () => {
     customDeck?: string;
   }) => {
     try {
-      const config = getConfig();
       const response = await $fetch<{ gameId: string }>(
-        `${config.public.apiBase}/api/game/create`,
+        `${getApiBase()}/api/game/create`,
         {
           method: 'POST',
           body: data || {},
@@ -94,9 +113,8 @@ export const useGameStore = defineStore('game', () => {
   const joinGame = async (gameIdParam: string, nicknameParam: string) => {
     try {
       loadSessionId();
-      const config = getConfig();
       const response = await $fetch<{ playerId: string; gameId: string }>(
-        `${config.public.apiBase}/api/game/join`,
+        `${getApiBase()}/api/game/join`,
         {
           method: 'POST',
           body: {
@@ -119,9 +137,8 @@ export const useGameStore = defineStore('game', () => {
   const connectWebSocket = () => {
     if (!gameId.value) return;
 
-    const config = getConfig();
     // WebSocket автоматически передает cookies при подключении
-    const wsUrl = `${config.public.wsBase}/ws`;
+    const wsUrl = `${getWsBase()}/ws`;
     ws.value = new WebSocket(wsUrl);
 
     ws.value.onopen = () => {
@@ -215,9 +232,8 @@ export const useGameStore = defineStore('game', () => {
   const loadGame = async () => {
     if (!gameId.value) return;
     try {
-      const config = getConfig();
       const gameData = await $fetch<GameState>(
-        `${config.public.apiBase}/api/game/${gameId.value}`,
+        `${getApiBase()}/api/game/${gameId.value}`,
         {
           credentials: 'include',
         }
@@ -230,9 +246,8 @@ export const useGameStore = defineStore('game', () => {
 
   const checkCurrentPlayer = async (gameIdParam: string) => {
     try {
-      const config = getConfig();
       const response = await $fetch<{ player: { id: string; nickname: string } | null }>(
-        `${config.public.apiBase}/api/game/${gameIdParam}/current-player`,
+        `${getApiBase()}/api/game/${gameIdParam}/current-player`,
         {
           credentials: 'include',
         }

@@ -2,10 +2,11 @@
 
 ## Шаги развертывания
 
-1. **Обновите конфигурацию nginx** (используйте `nginx-config-example.conf`):
-   - Проксирование для `/scrumpoker/` → frontend
-   - Проксирование для `/scrumpoker/api/` → backend
-   - Проксирование для `/scrumpoker/ws` → WebSocket
+1. **Обновите конфигурацию nginx**
+   
+   Вариант 1: приложение в подпапке `/scrumpoker/` — используйте `nginx-config-example.conf`.
+   
+   Вариант 2: приложение в корне домена `/` — используйте `nginx-config-example-root.conf`.
 
 2. **Перезапустите nginx**:
    ```bash
@@ -19,7 +20,7 @@
    ```env
    DATABASE_URL="mysql://root:ваш_пароль@172.17.0.1:3306/planning_poker"
    SESSION_SECRET="your-secret-key"
-   FRONTEND_URL="http://XX.XXX.XXX.XX"
+   FRONTEND_URL="https://pokerscrum.ru"
    ```
    
    **Важно:** 
@@ -29,14 +30,14 @@
 
    **`./frontend/.env`** (опционально, переменные уже в docker-compose.yml):
    ```env
-   API_BASE="http://XX.XXX.XXX.XX/scrumpoker"
-   WS_BASE="ws://XX.XXX.XXX.XX/scrumpoker/ws"
+   API_BASE="https://pokerscrum.ru"
+   WS_BASE="wss://pokerscrum.ru/ws"
    ```
    
-   Если используете HTTPS:
+   Если приложение развернуто в подпапке `/scrumpoker/`, укажите:
    ```env
-   API_BASE="https://your-domain.com/scrumpoker"
-   WS_BASE="wss://your-domain.com/scrumpoker/ws"
+   API_BASE="https://pokerscrum.ru/scrumpoker"
+   WS_BASE="wss://pokerscrum.ru/scrumpoker/ws"
    ```
 
 4. **Настройте MySQL для работы с Docker**:

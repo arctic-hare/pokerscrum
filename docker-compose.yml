@@ -10,7 +10,7 @@ services:
       - ./backend/.env
     environment:
       PORT: 3000
-      FRONTEND_URL: ${FRONTEND_URL:-http://62.173.138.60}
+      FRONTEND_URL: ${FRONTEND_URL:-https://pokerscrum.ru/}
     ports:
       - "127.0.0.1:3000:3000"
     # Для доступа к MySQL на хосте используем IP Docker bridge
@@ -22,11 +22,11 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        API_BASE: ${API_BASE:-http://62.173.138.60/scrumpoker}
-        WS_BASE: ${WS_BASE:-ws://62.173.138.60/scrumpoker}
+        API_BASE: ${API_BASE:-https://pokerscrum.ru/}
+        WS_BASE: ${WS_BASE:-ws://pokerscrum.ru/}
         # Nuxt требует префикс NUXT_PUBLIC_ для переменных в public runtimeConfig
-        NUXT_PUBLIC_API_BASE: ${API_BASE:-http://62.173.138.60/scrumpoker}
-        NUXT_PUBLIC_WS_BASE: ${WS_BASE:-ws://62.173.138.60/scrumpoker}
+        NUXT_PUBLIC_API_BASE: ${API_BASE:-https://pokerscrum.ru/}
+        NUXT_PUBLIC_WS_BASE: ${WS_BASE:-ws://pokerscrum.ru/}
     restart: always
     env_file:
       - ./frontend/.env
@@ -35,8 +35,8 @@ services:
       NITRO_PORT: 3001
       # Для production используем полный URL через nginx (работает и в браузере, и в SSR)
       # В коде уже добавляется /api, поэтому здесь только базовый путь
-      API_BASE: ${API_BASE:-http://62.173.138.60/scrumpoker}
+      API_BASE: ${API_BASE:-https://pokerscrum.ru/}
       # WebSocket требует полный URL (без /ws, он добавляется в коде)
-      WS_BASE: ${WS_BASE:-ws://62.173.138.60/scrumpoker}
+      WS_BASE: ${WS_BASE:-ws://pokerscrum.ru/}
     ports:
       - "127.0.0.1:3001:3001"
