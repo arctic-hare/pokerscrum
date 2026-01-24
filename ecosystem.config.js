@@ -73,8 +73,9 @@ module.exports = {
         NODE_ENV: 'production',
         PORT: 3001,
         NITRO_PORT: 3001,
-        NUXT_PUBLIC_API_BASE: 'https://pokerscrum.ru',
-        NUXT_PUBLIC_WS_BASE: 'wss://pokerscrum.ru'
+        // Пустые значения для Nginx reverse proxy (относительные пути)
+        NUXT_PUBLIC_API_BASE: '',
+        NUXT_PUBLIC_WS_BASE: ''
       }
     }
   ]

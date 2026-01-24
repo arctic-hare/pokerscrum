@@ -14,9 +14,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       // Переменные окружения с префиксом NUXT_PUBLIC_
-      // По умолчанию localhost для разработки
-      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://localhost:3000',
-      wsBase: process.env.NUXT_PUBLIC_WS_BASE || 'ws://localhost:3000',
+      // Пустая строка = относительные пути (для Nginx proxy)
+      // Для разработки без Nginx используйте полный URL
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000'),
+      wsBase: process.env.NUXT_PUBLIC_WS_BASE || (process.env.NODE_ENV === 'production' ? '' : 'ws://localhost:3000'),
     },
   },
   ssr: true,

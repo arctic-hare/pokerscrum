@@ -14,3 +14,6 @@ build/
 backend/logs/
 frontend/logs/
 .pm2/
+
+# ВАЖНО: .env.production НЕ в .gitignore - он нужен для production сборки!
+# frontend/.env.production должен быть в git
