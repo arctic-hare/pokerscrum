@@ -151,7 +151,7 @@ npm run prisma:studio
 ./prepare-pm2.sh  # Linux/macOS
 prepare-pm2.bat   # Windows
 
-# 2. Сборка
+# 2. Сборка (⚠️ ВАЖНО: используйте build:prod!)
 cd backend && npm run build:prod
 cd ../frontend && npm run build:prod
 
@@ -162,6 +162,8 @@ pm2 start ecosystem.config.js --env production
 pm2 startup
 pm2 save
 ```
+
+> ⚠️ **ВАЖНО:** Всегда используйте `npm run build:prod` для production сборки! Обычный `npm run build` может использовать localhost URL из .env файла.
 
 **Команды PM2:**
 ```bash

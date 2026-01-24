@@ -53,17 +53,26 @@ export const useGameStore = defineStore('game', () => {
 
   const getWsBase = () => {
     const config = getConfig();
+    
+    // 1. Приоритет: явно указанный wsBase
     if (config.public.wsBase) {
       return config.public.wsBase;
     }
+    
+    // 2. Конвертируем apiBase в WS URL
     if (config.public.apiBase) {
       return config.public.apiBase.replace(/^http/, 'ws');
     }
+    
+    // 3. В браузере определяем по текущему location
     if (typeof window !== 'undefined') {
       const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
       return `${protocol}://${window.location.host}`;
     }
-    return 'ws://localhost:3000';
+    
+    // 4. FALLBACK на SSR: используем тот же host, что и API
+    // НЕ используем localhost в production!
+    return '';
   };
 
   const isJoined = computed(() => !!gameId.value && !!playerId.value);
